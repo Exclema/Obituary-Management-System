@@ -1,0 +1,10 @@
+# Create a project directory
+mkdir obituary-platform
+cd obituary-platform
+
+# Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+# Install required packages
+pip install django mysqlclient python-dotenv
