@@ -1,0 +1,3 @@
+django-admin startproject obituary_project
+cd obituary_project
+python manage.py startapp obituaries
