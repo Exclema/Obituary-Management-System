@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block meta_keywords %}{{ meta_keywords }}{% endblock %}
+
+{% block og_title %}{{ og_title }}{% endblock %}
+{% block og_description %}{{ og_description }}{% endblock %}
+{% block og_image %}{% if obituary.image %}{{ obituary.image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block twitter_title %}{{ twitter_title }}{% endblock %}
+{% block twitter_description %}{{ twitter_description }}{% endblock %}
+{% block twitter_image %}{% if obituary.image %}{{ obituary.image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block title %}Obituary for {{ obituary.name }} | Obituary Platform{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <article>
+        <header class="mb-4">
+            <h1>{{ obituary.name }}</h1>
+            <p class="text-muted">
+                {{ obituary.date_of_birth|date:"F j, Y" }} - {{ obituary.date_of_death|date:"F j, Y" }}
+                <span class="mx-2">|</span>
+                Submitted by {{ obituary.author }} on {{ obituary.submission_date|date:"F j, Y" }}
+            </p>
+        </header>
+        
+        <div class="obituary-content mb-5">
+            {{ obituary.content|linebreaks }}
+        </div>
+        
+        <footer>
+            <div class="sharethis-inline-share-buttons mb-4"></div>
+            
+            <script type="application/ld+json">
+                {{ structured_data|safe }}
+            </script>
+        </footer>
+    </article>
+    
+    <div class="mt-5">
+        <a href="{% url 'view_obituaries' %}" class="btn btn-outline-primary">
+            &larr; Back to All Obituaries
+        </a>
+    </div>
+</div>
+{% endblock %}
