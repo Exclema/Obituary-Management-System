@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Submit an Obituary</h1>
+    <form id="obituaryForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="date_of_death">Date of Death</label>
+                    <input type="date" class="form-control" id="date_of_death" name="date_of_death" required>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="content">Obituary Content</label>
+            <textarea class="form-control" id="content" name="content" rows="6" required></textarea>
+        </div>
+        
+        <div class="form-group mb-4">
+            <label for="author">Author</label>
+            <input type="text" class="form-control" id="author" name="author" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit Obituary</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('obituaryForm').addEventListener('submit', function(event) {
+    const name = document.getElementById('name').value.trim();
+    const dob = document.getElementById('date_of_birth').value;
+    const dod = document.getElementById('date_of_death').value;
+    const content = document.getElementById('content').value.trim();
+    const author = document.getElementById('author').value.trim();
+    
+    if (!name || !dob || !dod || !content || !author) {
+        alert('Please fill in all required fields.');
+        event.preventDefault();
+        return;
+    }
+    
+    if (new Date(dod) < new Date(dob)) {
+        alert('Date of death cannot be before date of birth.');
+        event.preventDefault();
+        return;
+    }
+    
+    if (content.length < 50) {
+        alert('Obituary content should be at least 50 characters long.');
+        event.preventDefault();
+        return;
+    }
+});
+</script>
+{% endblock %}
